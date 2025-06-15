@@ -1,0 +1,24 @@
+{
+	"name": "@m1212e/konfigure",
+	"module": "index.ts",
+	"type": "module",
+	"scripts": {
+		"format": "bun run lint",
+		"lint": "bunx biome check --write .",
+		"build": "bun run typecheck && bun build.ts",
+		"typecheck": "tsc --noEmit"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9",
+		"@types/bun": "latest",
+		"lefthook": "^1.11.13",
+		"tsup": "^8.5.0"
+	},
+	"dependencies": {
+		"@sinclair/typebox": "^0.34.35",
+		"@sinclair/typemap": "^0.10.0"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	}
+}
