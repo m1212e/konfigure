@@ -34,7 +34,7 @@ export const sources = {
  * @returns {any} - The decoded and transformed values according to the schema.
  */
 
-export async function config<Schema extends Parameters<typeof TypeBox>[0]>({
+export async function konfigure<Schema extends Parameters<typeof TypeBox>[0]>({
 	schema,
 	sources,
 	delimeter = "_",

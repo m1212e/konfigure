@@ -1,9 +1,9 @@
 import { Type } from "@sinclair/typebox";
-import { config } from "../lib";
+import { konfigure } from "../lib";
 import { env } from "../lib/sources/env";
 import { object } from "../lib/sources/object";
 
-const configObject = await config({
+const configObject = await konfigure({
 	schema: Type.Object({
 		foo: Type.String(),
 		bar: Type.Optional(Type.Number()),
