@@ -4,7 +4,9 @@ import { dockerSecrets } from "./sources/dockerSecrets";
 import { env } from "./sources/env";
 import { jsonFile } from "./sources/jsonFile";
 import { object } from "./sources/object";
+import { tomlFile } from "./sources/tomlFile";
 import type { Source } from "./sources/type";
+import { yamlFile } from "./sources/yamlFile";
 
 /**
  * Uses first env, then docker secrets
@@ -18,6 +20,8 @@ export const sources = {
 	object,
 	dockerSecrets,
 	jsonFile,
+	yamlFile,
+	tomlFile,
 };
 
 /**

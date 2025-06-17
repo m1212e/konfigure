@@ -11,12 +11,15 @@
 	"devDependencies": {
 		"@biomejs/biome": "^1.9",
 		"@types/bun": "latest",
+		"@types/js-yaml": "^4.0.9",
 		"lefthook": "^1.11.13",
 		"tsup": "^8.5.0"
 	},
 	"dependencies": {
 		"@sinclair/typebox": "^0.34.35",
-		"@sinclair/typemap": "^0.10.0"
+		"@sinclair/typemap": "^0.10.0",
+		"js-yaml": "^4.1.0",
+		"toml": "^3.0.0"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
