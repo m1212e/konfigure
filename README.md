@@ -30,7 +30,7 @@ const appConfigSources = [
   sources.jsonFile(join(import.meta.dir, "example.json"))
   sources.object({
     foo: "fallback",
-	bar: 3,
+    bar: 3,
   })
 ]
 ```
