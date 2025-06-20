@@ -41,8 +41,8 @@ Finally, we put together our schema and sources in the `konfigure` call to read 
 ```ts
 import { konfigure } from "@m1212e/konfigure";
 const configObject = await konfigure({
-	schema: appConfigSchema,
-	sources: appConfigSources,
+  schema: appConfigSchema,
+  sources: appConfigSources,
 });
 ```
 This outputs a strongly typed object according to the schema we defined, populated by the sources we decided on.
@@ -54,31 +54,30 @@ In some cases we have some form of nested objects in our config. Say we want to 
 
 ```ts
 const configObject = await konfigure({
-	// delimeter: "_", // optionally, you can change the delimeter
-	schema: Type.Object({
-		db: Type.Object({
-			username: Type.String(),
-			password: Type.String(),
-			port: Type.String(),
-			host: Type.String(),
-		}),
-        application: Type.Object({
-			port: Type.String(),
-			host: Type.String(),
-		}),
-	}),
-	sources: [
-        /*
-            While our env vars are set like this:
-
-            db_username: "username",
-			db_password: "123",
-			db_port: "8822",
-			db_host: "localhost",
-			application_port: "3000",
-			application_host: "0.0.0.0",
-        */
-		sources.env(),
-	],
+  // delimeter: "_", // optionally, you can change the delimeter
+  schema: Type.Object({
+    db: Type.Object({
+      username: Type.String(),
+      password: Type.String(),
+      port: Type.String(),
+      host: Type.String(),
+    }),
+    application: Type.Object({
+      port: Type.String(),
+      host: Type.String(),
+    }),
+  }),
+  sources: [
+    /*
+      While our env vars are set like this:
+      db_username: "username",
+      db_password: "123",
+      db_port: "8822",
+      db_host: "localhost",
+      application_port: "3000",
+      application_host: "0.0.0.0",
+    */
+    sources.env(),
+  ],
 });
 ```
