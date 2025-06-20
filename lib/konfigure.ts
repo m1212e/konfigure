@@ -38,9 +38,9 @@ export async function konfigure<Schema extends object | string>({
 	}
 	const convertedValues = convertFromDelimeter(values, delimeter);
 	const cleanedValues = Value.Clean(convertedSchema, convertedValues);
-	const castedValues = Value.Cast(cleanedValues as any, convertedValues);
+	// const castedValues = Value.Cast(cleanedValues as any, convertedValues);
 	try {
-		return Value.Decode(convertedSchema, castedValues) as Static<Schema>;
+		return Value.Decode(convertedSchema, cleanedValues) as Static<Schema>;
 	} catch (error: any) {
 		throw new Error(`
 
