@@ -39,6 +39,7 @@ const appConfigSources = [
 Finally, we put together our schema and sources in the `konfigure` call to read our config.
 
 ```ts
+import { konfigure } from "@m1212e/konfigure";
 const configObject = await konfigure({
 	schema: appConfigSchema,
 	sources: appConfigSources,
