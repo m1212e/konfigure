@@ -3,9 +3,11 @@ import { join } from "node:path";
 import { build } from "tsup";
 import packagejson from "./package.json";
 
-const dir = import.meta.dir;
-const outDir = join(dir, "out");
-const libIndex = join(dir, "lib", "index.ts");
+//TODO: Add proper TS typechecks to builds
+
+const projectDir = import.meta.dir;
+const outDir = join(projectDir, "out");
+const libIndex = join(projectDir, "lib", "index.ts");
 
 if (await exists(outDir)) {
 	console.info("Cleaning outDir...");
@@ -29,7 +31,7 @@ await build({
 	splitting: true,
 	external: [
 		...Object.keys(packagejson.dependencies),
-		...Object.keys(packagejson.peerDependencies ?? {}),
+		...Object.keys(packagejson.peerDependencies),
 	],
 });
 
@@ -87,7 +89,7 @@ console.info("Created package.json!");
 // ==============================
 
 console.info("Copying README.md...");
-const readme = await readFile(join(dir, "README.md"), {
+const readme = await readFile(join(projectDir, "README.md"), {
 	encoding: "utf-8",
 });
 await writeFile(join(outDir, "README.md"), readme, { encoding: "utf-8" });
@@ -98,7 +100,7 @@ console.info("Copied README.md!");
 // ==============================
 
 console.info("Copying LICENSE...");
-const license = await readFile(join(dir, "LICENSE"), {
+const license = await readFile(join(projectDir, "LICENSE"), {
 	encoding: "utf-8",
 });
 await writeFile(join(outDir, "LICENSE"), license, { encoding: "utf-8" });

@@ -1,28 +1,6 @@
 import { Value } from "@sinclair/typebox/value";
-import { TypeBox } from "@sinclair/typemap";
-import { dockerSecrets } from "./sources/dockerSecrets";
-import { env } from "./sources/env";
-import { jsonFile } from "./sources/jsonFile";
-import { object } from "./sources/object";
-import { tomlFile } from "./sources/tomlFile";
+import { type Static, TypeBox } from "@sinclair/typemap";
 import type { Source } from "./sources/type";
-import { yamlFile } from "./sources/yamlFile";
-
-/**
- * Uses first env, then docker secrets
- */
-export const defaultSources = [env, dockerSecrets];
-/**
- * All available sources
- */
-export const sources = {
-	env,
-	object,
-	dockerSecrets,
-	jsonFile,
-	yamlFile,
-	tomlFile,
-};
 
 /**
  * Configures and decodes values based on the provided schema and sources.
@@ -31,10 +9,10 @@ export const sources = {
  * @param {Schema} params.schema - The schema definition for validation and decoding.
  * @param {Source[]} params.sources - An array of sources to retrieve key-value pairs.
  * @param {string} [params.delimeter="_"] - The delimiter used to convert keys into nested objects.
- * @returns {any} - The decoded and transformed values according to the schema.
+ * @returns - The decoded and transformed values according to the schema.
  */
 
-export async function konfigure<Schema extends Parameters<typeof TypeBox>[0]>({
+export async function konfigure<Schema extends object | string>({
 	schema,
 	sources,
 	delimeter = "_",
@@ -55,7 +33,7 @@ export async function konfigure<Schema extends Parameters<typeof TypeBox>[0]>({
 	}
 	const convertedValues = convertFromDelimeter(values, delimeter);
 	const cleanedValues = Value.Clean(convertedSchema, convertedValues);
-	return Value.Decode(convertedSchema, cleanedValues);
+	return Value.Decode(convertedSchema, cleanedValues) as Static<Schema>;
 }
 
 /**
