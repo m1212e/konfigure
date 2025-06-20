@@ -36,11 +36,12 @@ export async function konfigure<Schema extends object | string>({
 			resolverErrors.push(error);
 		}
 	}
-	const convertedValues = convertFromDelimeter(values, delimeter);
-	const cleanedValues = Value.Clean(convertedSchema, convertedValues);
-	// const castedValues = Value.Cast(cleanedValues as any, convertedValues);
+	let processedValues = convertFromDelimeter(values, delimeter);
+	Value.Clean(convertedSchema, processedValues);
+	processedValues = Value.Convert(convertedSchema, processedValues) as any;
+	Value.Default(convertedSchema, processedValues);
 	try {
-		return Value.Decode(convertedSchema, cleanedValues) as Static<Schema>;
+		return Value.Decode(convertedSchema, processedValues) as Static<Schema>;
 	} catch (error: any) {
 		throw new Error(`
 
