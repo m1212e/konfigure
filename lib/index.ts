@@ -10,7 +10,7 @@ export { konfigure } from "./konfigure";
 /**
  * Uses first env, then docker secrets
  */
-export const defaultSources = [env, dockerSecrets];
+export const defaultSources = [env(), dockerSecrets()];
 
 /**
  * All available sources

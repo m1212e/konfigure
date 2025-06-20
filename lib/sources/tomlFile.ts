@@ -16,13 +16,11 @@ import type { Source } from "./type";
  * })
  */
 export function tomlFile(filepath: string): Source {
-	return async () => {
-		try {
+	return {
+		name: `TOML file at ${filepath}`,
+		resolver: async () => {
 			const data = await readFile(filepath, "utf-8");
 			return parse(data);
-		} catch (error) {
-			console.error(`Failed to read toml file: ${filepath}, error: ${error}`);
-			return {};
-		}
+		},
 	};
 }

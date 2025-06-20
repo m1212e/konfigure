@@ -15,6 +15,7 @@
         "@types/js-yaml": "^4.0.9",
         "lefthook": "^1.11.13",
         "tsup": "^8.5.0",
+        "zod": "^3.25.67",
       },
       "peerDependencies": {
         "typescript": "^5",

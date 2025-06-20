@@ -1,2 +1,5 @@
 export type MaybePromise<T> = T | Promise<T>;
-export type Source = () => MaybePromise<Record<string, any>>;
+export type Source = {
+	name: string;
+	resolver: () => MaybePromise<Record<string, any>>;
+};

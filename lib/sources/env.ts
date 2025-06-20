@@ -14,5 +14,8 @@ import type { Source } from "./type";
  * })
  */
 export function env(): Source {
-	return () => process.env;
+	return {
+		name: "Environment variables",
+		resolver: () => process.env,
+	};
 }

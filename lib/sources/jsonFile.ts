@@ -15,13 +15,11 @@ import type { Source } from "./type";
  * })
  */
 export function jsonFile(filepath: string): Source {
-	return async () => {
-		try {
+	return {
+		name: `JSON file at ${filepath}`,
+		resolver: async () => {
 			const data = await readFile(filepath, "utf-8");
 			return JSON.parse(data);
-		} catch (error) {
-			console.error(`Failed to read json file: ${filepath}, error: ${error}`);
-			return {};
-		}
+		},
 	};
 }

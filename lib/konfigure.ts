@@ -24,16 +24,41 @@ export async function konfigure<Schema extends object | string>({
 	const convertedSchema = TypeBox(schema);
 
 	const values = {};
+	const resolverErrors = [];
 
-	for (const source of sources.reverse()) {
-		const newRead = await source();
-		for (const [key, value] of Object.entries(newRead)) {
-			(values as any)[key] = value;
+	for (const source of [...sources].reverse()) {
+		try {
+			const newRead = await source.resolver();
+			for (const [key, value] of Object.entries(newRead)) {
+				(values as any)[key] = value;
+			}
+		} catch (error: any) {
+			resolverErrors.push(error);
 		}
 	}
 	const convertedValues = convertFromDelimeter(values, delimeter);
 	const cleanedValues = Value.Clean(convertedSchema, convertedValues);
-	return Value.Decode(convertedSchema, cleanedValues) as Static<Schema>;
+	const castedValues = Value.Cast(cleanedValues as any, convertedValues);
+	try {
+		return Value.Decode(convertedSchema, castedValues) as Static<Schema>;
+	} catch (error: any) {
+		throw new Error(`
+
+Failed to read configuration values: ${error}
+
+Please make sure that you have the correct values set and the right sources defined.
+Available sources in applied hierarchy: ${sources.map((s) => s.name).join(", ")}
+
+See the validation error for more details:
+
+${JSON.stringify(error, null, 2)}
+
+Errors from resolver sources:
+
+${resolverErrors.map((e) => JSON.stringify(e, null, 2)).join("\n")}
+
+`);
+	}
 }
 
 /**
@@ -71,9 +96,9 @@ function convertFromDelimeter(object: Record<string, any>, delimeter: string) {
 		for (const segment of pathSegments.slice(0, -1)) {
 			if (!current[segment]) {
 				current[segment] = {};
-				current = current[segment];
+				current = { ...current[segment] };
 			} else {
-				current = current[segment];
+				current = { ...current[segment] };
 			}
 		}
 		current[pathSegments[pathSegments.length - 1]!] = value;

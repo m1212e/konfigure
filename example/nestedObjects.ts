@@ -9,7 +9,7 @@ const configObject = await konfigure({
 		}),
 	}),
 	sources: [
-		sources.env,
+		sources.env(),
 		sources.object({
 			foo_bar: "fallback",
 			foo_baz: "values",

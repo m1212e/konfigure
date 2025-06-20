@@ -7,7 +7,7 @@ const configObject = await konfigure({
 		bar: Type.Optional(Type.Number()),
 	}),
 	sources: [
-		sources.env,
+		sources.env(),
 		sources.object({
 			foo: "fallback",
 			baz: "values",

@@ -16,13 +16,11 @@ import type { Source } from "./type";
  * })
  */
 export function yamlFile(filepath: string): Source {
-	return async () => {
-		try {
+	return {
+		name: `YAML file at ${filepath}`,
+		resolver: async () => {
 			const data = await readFile(filepath, "utf-8");
 			return load(data);
-		} catch (error) {
-			console.error(`Failed to read yaml file: ${filepath}, error: ${error}`);
-			return {};
-		}
+		},
 	};
 }
