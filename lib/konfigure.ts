@@ -8,7 +8,7 @@ import type { Source } from "./sources/type";
  * @template Schema - The schema type used for decoding.
  * @param {Schema} params.schema - The schema definition for validation and decoding.
  * @param {Source[]} params.sources - An array of sources to retrieve key-value pairs.
- * @param {string} [params.delimeter="_"] - The delimiter used to convert keys into nested objects.
+ * @param {string} [params.delimeter="_"] - The delimiter used to convert keys into nested objects. Use "disabled" to disable object mapping.
  * @returns - The decoded and transformed values according to the schema.
  */
 
@@ -19,7 +19,7 @@ export async function konfigure<Schema extends object | string>({
 }: {
 	schema: Schema;
 	sources: Source[];
-	delimeter?: string;
+	delimeter?: string | "disabled";
 }) {
 	const convertedSchema = TypeBox(schema);
 
@@ -36,7 +36,8 @@ export async function konfigure<Schema extends object | string>({
 			resolverErrors.push(error);
 		}
 	}
-	let processedValues = convertFromDelimeter(values, delimeter);
+	let processedValues =
+		delimeter === "disabled" ? values : convertFromDelimeter(values, delimeter);
 	Value.Clean(convertedSchema, processedValues);
 	processedValues = Value.Convert(convertedSchema, processedValues) as any;
 	Value.Default(convertedSchema, processedValues);
