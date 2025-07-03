@@ -27,7 +27,7 @@ import { sources } from "@m1212e/konfigure";
 const appConfigSources = [
   sources.env(),
   sources.dockerSecrets(),
-  sources.jsonFile(join(import.meta.dir, "example.json"))
+  sources.jsonFile(join(import.meta.dir, "example.json")),
   sources.object({
     foo: "fallback",
     bar: 3,
