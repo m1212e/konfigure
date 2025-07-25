@@ -42,6 +42,7 @@ export async function konfigure<Schema extends object | string>({
 	processedValues = Value.Convert(convertedSchema, processedValues) as any;
 	Value.Default(convertedSchema, processedValues);
 	try {
+		//@ts-ignore
 		return Value.Decode(convertedSchema, processedValues) as Static<Schema>;
 	} catch (error: any) {
 		throw new Error(`
