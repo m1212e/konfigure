@@ -22,13 +22,16 @@ const appConfigSchema = Type.Object({
 Afterwards, decide on which sources you would like to read for your config and in which order. Oftentimes, you'd have some mix of env vars and config file. Docker secrets are also supported. The available sources are exported from konfigure under the `sources` object.
 
 ```ts
-import { sources } from "@m1212e/konfigure";
+import { env } from '@m1212e/konfigure/source/env.js';
+import { dockerSecrets } from '@m1212e/konfigure/source/dockerSecrets.js';
+import { jsonFile } from '@m1212e/konfigure/source/jsonFile.js';
+import { object } from '@m1212e/konfigure/source/object.js';
 
 const appConfigSources = [
-  sources.env(),
-  sources.dockerSecrets(),
-  sources.jsonFile(join(import.meta.dir, "example.json")),
-  sources.object({
+  env(),
+  dockerSecrets(),
+  jsonFile(join(import.meta.dir, "example.json")),
+  object({
     foo: "fallback",
     bar: 3,
   })
@@ -77,7 +80,7 @@ const configObject = await konfigure({
       application_port: "3000",
       application_host: "0.0.0.0",
     */
-    sources.env(),
+    env(),
   ],
 });
 ```
