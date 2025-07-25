@@ -8,18 +8,18 @@ import type { Source } from "./sources/type";
  * @template Schema - The schema type used for decoding.
  * @param {Schema} params.schema - The schema definition for validation and decoding.
  * @param {Source[]} params.sources - An array of sources to retrieve key-value pairs.
- * @param {string} [params.delimeter="_"] - The delimiter used to convert keys into nested objects. Use "disabled" to disable object mapping.
+ * @param {string} [params.delimiter="_"] - The delimiter used to convert keys into nested objects. Use "disabled" to disable object mapping.
  * @returns - The decoded and transformed values according to the schema.
  */
 
 export async function konfigure<Schema extends object | string>({
 	schema,
 	sources,
-	delimeter = "_",
+	delimiter = "_",
 }: {
 	schema: Schema;
 	sources: Source[];
-	delimeter?: string | "disabled";
+	delimiter?: string | "disabled";
 }) {
 	const convertedSchema = TypeBox(schema);
 
@@ -37,7 +37,7 @@ export async function konfigure<Schema extends object | string>({
 		}
 	}
 	let processedValues =
-		delimeter === "disabled" ? values : convertFromDelimeter(values, delimeter);
+		delimiter === "disabled" ? values : convertFromdelimiter(values, delimiter);
 	Value.Clean(convertedSchema, processedValues);
 	processedValues = Value.Convert(convertedSchema, processedValues) as any;
 	Value.Default(convertedSchema, processedValues);
@@ -64,8 +64,8 @@ ${resolverErrors.map((e) => JSON.stringify(e, null, 2)).join("\n")}
 }
 
 /**
- * Given an object with keys that are delimeter-separated strings, returns a new
- * object with the same values but with nested objects instead of delimeter-separated
+ * Given an object with keys that are delimiter-separated strings, returns a new
+ * object with the same values but with nested objects instead of delimiter-separated
  * strings as keys.
  *
  * @example
@@ -74,7 +74,7 @@ ${resolverErrors.map((e) => JSON.stringify(e, null, 2)).join("\n")}
  * 	"foo.baz": "qux",
  * };
  *
- * const output = convertFromDelimeter(input, ".");
+ * const output = convertFromdelimiter(input, ".");
  *
  * // output is {
  * // 	foo: {
@@ -83,11 +83,11 @@ ${resolverErrors.map((e) => JSON.stringify(e, null, 2)).join("\n")}
  * // 	},
  * // };
  */
-function convertFromDelimeter(object: Record<string, any>, delimeter: string) {
+function convertFromdelimiter(object: Record<string, any>, delimiter: string) {
 	const result: Record<string, any> = {};
 
 	for (const [key, value] of Object.entries(object)) {
-		const pathSegments = key.split(delimeter);
+		const pathSegments = key.split(delimiter);
 
 		if (pathSegments.length === 1) {
 			result[pathSegments[0]!] = value;

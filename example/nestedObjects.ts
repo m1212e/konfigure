@@ -21,5 +21,5 @@ const configObject = await konfigure({
 
 // reads the foo and bar values from the environment or falls back to the
 // provided static object
-// then resolves nested objects by the default delimeter "_" (configurable)
+// then resolves nested objects by the default delimiter "_" (configurable)
 console.log(configObject);

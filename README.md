@@ -52,12 +52,12 @@ This outputs a strongly typed object according to the schema we defined, populat
 
 If you would like to see some more elaborate examples, see the [examples](./example/) directory.
 
-## Path delimeter
-In some cases we have some form of nested objects in our config. Say we want to group the db credentials and the host settings together in an object each. In cases like these you can use a delimeter ('_' per default) to set nested values in e.g. env vars or other sources which do not support nested data structures out of the box. Our `konfigure` call might look like this.
+## Path delimiter
+In some cases we have some form of nested objects in our config. Say we want to group the db credentials and the host settings together in an object each. In cases like these you can use a delimiter ('_' per default) to set nested values in e.g. env vars or other sources which do not support nested data structures out of the box. Our `konfigure` call might look like this.
 
 ```ts
 const configObject = await konfigure({
-  // delimeter: "_", // optionally, you can change the delimeter
+  // delimiter: "_", // optionally, you can change the delimiter
   schema: Type.Object({
     db: Type.Object({
       username: Type.String(),
