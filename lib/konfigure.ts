@@ -38,6 +38,7 @@ export async function konfigure<Schema extends object | string>({
 	}
 	let processedValues =
 		delimeter === "disabled" ? values : convertFromDelimeter(values, delimeter);
+	//@ts-ignore
 	Value.Clean(convertedSchema, processedValues);
 	processedValues = Value.Convert(convertedSchema, processedValues) as any;
 	Value.Default(convertedSchema, processedValues);
