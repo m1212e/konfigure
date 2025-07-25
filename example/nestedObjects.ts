@@ -1,7 +1,5 @@
 import { Type } from "@sinclair/typebox";
-import { konfigure } from "../lib";
-import { env } from "../lib/sources/env";
-import { object } from "../lib/sources/object";
+import { konfigure, sources } from "../lib";
 
 const configObject = await konfigure({
 	schema: Type.Object({
@@ -11,8 +9,8 @@ const configObject = await konfigure({
 		}),
 	}),
 	sources: [
-		env(),
-		object({
+		sources.env(),
+		sources.object({
 			foo_bar: "fallback",
 			foo_baz: "values",
 		}),

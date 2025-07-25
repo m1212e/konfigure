@@ -32,7 +32,9 @@ export async function konfigure<Schema extends object | string>({
 
 	if (!convertedSchema && IsZod(schema)) {
 		try {
-			const { TypeBoxFromZod } = await import("@sinclair/typemap/typebox");
+			const { TypeBoxFromZod } = await import(
+				"@sinclair/typemap/typebox/typebox-from-zod.mjs"
+			);
 			convertedSchema = TypeBoxFromZod(schema as any);
 		} catch (error: any) {
 			importErrors.push(error);
@@ -40,8 +42,9 @@ export async function konfigure<Schema extends object | string>({
 	}
 	if (!convertedSchema && IsValibot(schema)) {
 		try {
-			const { TypeBoxFromValibot } = await import("@sinclair/typemap/typebox");
-			// @ts-ignore
+			const { TypeBoxFromValibot } = await import(
+				"@sinclair/typemap/typebox/typebox-from-valibot.mjs"
+			);
 			convertedSchema = TypeBoxFromValibot(schema as any);
 			console.log("called2");
 		} catch (error: any) {

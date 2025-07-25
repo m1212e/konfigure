@@ -1,6 +1,5 @@
 import z from "zod";
-import { konfigure } from "../lib";
-import { object } from "../lib/sources/object";
+import { defaultSources, konfigure, sources } from "../lib";
 
 const configObject = await konfigure({
 	// instead of typebox you can use zod or valibot
@@ -9,7 +8,8 @@ const configObject = await konfigure({
 		bar: z.number().optional(),
 	}),
 	sources: [
-		object({
+		...defaultSources,
+		sources.object({
 			foo: "fallback",
 			bar: "3",
 		}),
