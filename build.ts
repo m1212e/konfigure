@@ -1,4 +1,11 @@
-import { exists, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import {
+	exists,
+	mkdir,
+	readdir,
+	readFile,
+	rm,
+	writeFile,
+} from "node:fs/promises";
 import { join } from "node:path";
 import { build } from "tsup";
 import packagejson from "./package.json";
@@ -8,6 +15,10 @@ import packagejson from "./package.json";
 const projectDir = import.meta.dir;
 const outDir = join(projectDir, "out");
 const libIndex = join(projectDir, "lib", "index.ts");
+const sourcesDir = join(projectDir, "lib", "sources");
+const allSourceModules = (await readdir(sourcesDir)).map((f) =>
+	join(sourcesDir, f),
+);
 
 if (await exists(outDir)) {
 	console.info("Cleaning outDir...");
@@ -19,7 +30,7 @@ await mkdir(outDir, { recursive: true });
 console.info("Created outDir!");
 
 await build({
-	entry: [libIndex],
+	entry: [libIndex, ...allSourceModules],
 	format: ["cjs", "esm"],
 	target: ["node20", "es2020"],
 	minify: true,
@@ -75,6 +86,7 @@ finalPackageJson.devDependencies = undefined as any;
 		node: "./index.cjs",
 		default: "./index.cjs",
 	},
+	"./source/*": "./sources/*",
 };
 
 await writeFile(
